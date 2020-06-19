@@ -1,0 +1,17 @@
+name: SuperLottery
+main: com.tany.superlottery.Main
+version: 1.0.0
+depend: [ProtocolLib] 
+author: tany
+softdepend: [Vault]
+commands:
+  superlottery:
+    usage: /superlottery
+    aliases: [sl]
+permissions: 
+  sl.gui: 
+    default: true
+  sl.rule:
+    default: true
+  sl.draw:
+    default: true

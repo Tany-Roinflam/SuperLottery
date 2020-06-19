@@ -1,0 +1,66 @@
+#时间相关
+#下注开始时间/秒
+BetTime: 300
+#开奖时间（一次赌博整个流程的时长）
+DrawTime: 1200
+
+#是否开启停止下注功能
+StartStopBetTime: false
+#下注时间到后多少秒开始停止下注
+StopBetTime: 800
+
+
+#是否启用对应的临近开奖提醒信息
+Countdownone: false
+Countdowntwo: false
+Countdownthree: false
+
+#设置在开奖前多少秒提醒一次
+CountdownoneTime: 15
+CountdowntwoTime: 60
+CountdownthreeTime: 120
+
+
+#赔率设置
+#单双的赔率1：？
+SadOdds: 2
+#大小的赔率1：？
+SizeOdds: 3
+#数字范围赔率1：？
+NumberOdds: 10
+#指定数字赔率1：？（能中就有鬼了，别觉得默认太高了）
+SuperOdds: 99
+
+
+#其他设置
+#是否让下注获得物品无法再下注（添加lore)
+Lore: false
+
+#设置lore的样式
+SetLore: '&6【&e】---[&6通过&e下注&6获得&e]---【&6】'
+
+
+
+
+#黑箱系统
+#黑箱操控功能（指令操控下一次号码、立刻开奖等）
+BlackBox: false
+#默认通吃概率（数值/总几率）
+DefaultProbability: 5
+#每个当有个人下注，增加的通吃概率
+PeopleProbability: 1
+
+#开启多少次通吃/提高通吃概率
+BetNumber: false
+#开奖多少次通吃一次
+BetTakeAll: 5
+#开奖多少次增加一次通吃几率
+
+AddProbabilityNumber: 6
+#增加的概率
+AddProbability: 10
+
+#最大通吃概率
+MaxProbability: 50
+#总几率，默认为百分比
+Probability: 100

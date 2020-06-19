@@ -1,0 +1,61 @@
+Dealer: '&b[&e超级&6抽奖&b]'
+
+BetMessage: '&c未到下注时间，无法打开'
+
+StopMessage: '&c已经停止下注'
+
+StartMessage: '&c你已经下注过了！'
+
+CountdownoneMessage: '&e&l正在载入&6&l开奖结果信息！'
+
+CountdowntwoMessage: '&a还有&660&a秒开奖！'
+
+CountdownthreeMessage: '&a还有&6120&a秒开奖！'
+
+SuccessBetMessage: '&a成功下注'
+
+NotBetMessage: '&c请先选择范围再下注'
+
+NotDrawMessage: '&c你没有可领取的物品'
+
+NotEmptyBackup: '&c背包已满，请清空你的背包！'
+
+DrawMessage: '&a你已经领取完所有的赌博奖励了'
+
+TaskDrawMessage: '&a自动奖励已发放完毕'
+
+NoDrawOneMessage: '&c你还有物品没有领取'
+
+NoDrawTwoMessage: '&c请输入/sl draw来领取剩余部分'
+
+CommandTask: '&6正在生成开奖结果信息'
+
+BetsMessage: 
+  - '[message]'
+  - '[randomnumbermessage]'
+  - '&a距离下轮开始下注时间来到还有&e[time]&a秒 '
+  - '&b参与本次下注人数&d:&3&l[bet]'
+  - '&d本次中奖人数:&3[draw]'
+  - '&e[]-------[&4中&b奖&d人&a员&e]-------[]'
+  - '[onemessage]'
+  - '[twomessage]'
+  - '[smallmessage]'
+  - '[bigmessage]'
+  - '[numbermessage]'
+  - '[supernumbermessage]'
+  - '[message]'
+  
+NotAnyDraw: '&c由于通吃，你的奖励被吞完了'
+
+DrawMoney: '&a成功给予你下注奖励&6:&e[money]&6游戏币'
+
+DrawXp: '&a成功给予你下注奖励&5:&d[xp]&5点经验'
+
+BetTaskOneMessage: '&a下注时间到！'
+BetTaskTwoMessage: '&b需要下注的人输入&3/sl gui&b来下注  &6'
+BetTaskThreeMessage: '&6距离开奖还有&c[time]&6秒'
+BetTaskFourMessage: '&6距离结束下注还有&e[time]&6秒'
+
+ChooseWayNotDraw: '&c你选择了类型但没确认下注！'
+
+NotItem: '&c此类型无法下注物品'
