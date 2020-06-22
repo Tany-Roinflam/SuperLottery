@@ -85,6 +85,10 @@ public class Event implements Listener
                     p.sendMessage("§e无法搜索插件前置：§6Vault");
                     return;
                 }
+                if(!Other.config.getBoolean("MoneyBet")) {
+                	p.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoMoneyBet")));
+                	return;
+                }
                 for (int i = 0; i <= 6; ++i) {
                     if (a.getClickedInventory().getItem(10 + i) != null) {
                         p.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotItem")));
@@ -115,6 +119,10 @@ public class Event implements Listener
                     p.sendMessage("§c请先选择你下注的号码范围！");
                     return;
                 }
+                if(!Other.config.getBoolean("XpBet")) {
+                	p.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoXpBet")));
+                	return;
+                }
                 for (int i = 0; i <= 6; ++i) {
                     if (a.getClickedInventory().getItem(10 + i) != null) {
                         p.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotItem")));
@@ -143,6 +151,10 @@ public class Event implements Listener
                 if (!Main.lottery.containsKey(p.getName())) {
                     p.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NotBetMessage")));
                     return;
+                }
+                if(!Other.config.getBoolean("ItemBet")) {
+                	p.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("NoItemBet")));
+                	return;
                 }
                 if (Other.data.getStringList("Item").size() == 0) {
                     p.sendMessage("§c当前没有任何物品可下注");

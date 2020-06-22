@@ -19,6 +19,9 @@ public class MoneyPrompt extends NumericPrompt
         if (money < input.intValue()) {
             return (Prompt)this;
         }
+        if(input.intValue() > Other.config.getInt("MaxMoney")) {
+        	return (Prompt)this;
+        }
         Main.info.put(player.getName(), true);
         Main.economy.withdrawPlayer(player, (double)input.intValue());
         List<String> ExpMoney = (List<String>)Other.data.getStringList("ExpMoney");
@@ -34,6 +37,6 @@ public class MoneyPrompt extends NumericPrompt
     }
     
     public String getPromptText(ConversationContext context) {
-        return "§e请输入你要下注的§6游戏币";
+        return "§e请输入你要下注的§6游戏币，不能超过"+Other.config.getInt("MaxMoney");
     }
 }

@@ -19,6 +19,9 @@ public class LevelPrompt extends NumericPrompt
         if (player.getTotalExperience() < input.intValue()) {
             return (Prompt)this;
         }
+        if(input.intValue() > Other.config.getInt("MaxXp")) {
+        	return (Prompt)this;
+        }
         Main.info.put(player.getName(), true);
         Way.giveExp(player, -input.intValue());
         List<String> ExpMoney = Other.data.getStringList("ExpMoney");
@@ -34,6 +37,6 @@ public class LevelPrompt extends NumericPrompt
     }
     
     public String getPromptText(ConversationContext context) {
-        return "§a请输入你要下注的经验";
+        return "§a请输入你要下注的经验，不能超过"+Other.config.getInt("MaxXp");
     }
 }

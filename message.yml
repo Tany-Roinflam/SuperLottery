@@ -59,3 +59,9 @@ BetTaskFourMessage: '&6距离结束下注还有&e[time]&6秒'
 ChooseWayNotDraw: '&c你选择了类型但没确认下注！'
 
 NotItem: '&c此类型无法下注物品'
+
+NoItemBet: '&c无法下注物品'
+
+NoMoneyBet: '&c无法下注游戏币'
+
+NoXpBet: '&c无法下注经验'

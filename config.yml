@@ -33,9 +33,23 @@ SuperOdds: 99
 
 
 #其他设置
+#是否开启物品下注
+ItemBet: true
+
+#是否开启游戏币下注
+MoneyBet: true
+
+#是否开启经验下注
+XpBet: true
+
+#一次最大下注多少游戏币
+MaxMoney: 100000
+
+#一次最大下注多少点经验
+MaxXp: 100000
+
 #是否让下注获得物品无法再下注（添加lore)
 Lore: false
-
 #设置lore的样式
 SetLore: '&6【&e】---[&6通过&e下注&6获得&e]---【&6】'
 

@@ -1,6 +1,6 @@
 name: SuperLottery
 main: com.tany.superlottery.Main
-version: 1.0.0
+version: 1.0.1
 depend: [ProtocolLib] 
 author: tany
 softdepend: [Vault]
