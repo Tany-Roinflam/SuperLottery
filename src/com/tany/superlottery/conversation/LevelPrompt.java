@@ -16,6 +16,9 @@ public class LevelPrompt extends NumericPrompt
     protected Prompt acceptValidatedInput(ConversationContext context, Number input) {
         context.setSessionData((Object)"name", (Object)input.intValue());
         Player player = (Player)context.getForWhom();
+        if(input.intValue()<=0) {
+        	return this;
+        }
         if (player.getTotalExperience() < input.intValue()) {
             return (Prompt)this;
         }

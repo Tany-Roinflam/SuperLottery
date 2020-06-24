@@ -283,13 +283,13 @@ public class CommandDrawTask extends BukkitRunnable
         			.replace("[message]", message).replace("[randomnumbermessage]", randomnumbermessage).replace("[onemessage]", onemessage).replace("[twomessage]", twomessage)
         			.replace("[smallmessage]", smallmessage).replace("[bigmessage]", bigmessage).replace("[numbermessage]", numbermessage).replace("[supernumbermessage]", supernumbermessage)));
         }
-        for (String player : Main.info.keySet()) {
+        for (String player : new ArrayList<String>(Main.info.keySet())) {
             if (!Main.data.containsKey(player)) {
                 List<String> item = Other.data.getStringList("Player." + player);
                 List<String> ExpMoneylist = Other.data.getStringList("ExpMoney");
                 item.clear();
                 Other.data.set("Player." + player, item);
-                for (String ExpMoney : ExpMoneylist) {
+                for (String ExpMoney : new ArrayList<String>(ExpMoneylist)) {
                     if (ExpMoney.startsWith(player)) {
                         ExpMoneylist.remove(ExpMoney);
                         Other.data.set("ExpMoney", ExpMoneylist);
@@ -321,7 +321,7 @@ public class CommandDrawTask extends BukkitRunnable
                         int type = Integer.parseInt(ExpMoney2.split(":")[1]);
                         int numbers = Integer.parseInt(ExpMoney2.split(":")[2]);
                         if (type == 1) {
-                            for (String bet2 : Bet) {
+                            for (String bet2 : new ArrayList<String>(Bet)) {
                                 if (bet2.startsWith(player.getName() + ":")) {
                                     int multiple = 0;
                                     switch (Integer.parseInt(bet2.split(":")[1])) {
@@ -363,7 +363,7 @@ public class CommandDrawTask extends BukkitRunnable
                         if (type != 2) {
                             continue;
                         }
-                        for (String bet2 : Bet) {
+                        for (String bet2 : new ArrayList<String>(Bet)) {
                             if (bet2.startsWith(player.getName() + ":")) {
                                 int multiple = 0;
                                 switch (Integer.parseInt(bet2.split(":")[1])) {

@@ -16,6 +16,9 @@ public class MoneyPrompt extends NumericPrompt
         context.setSessionData("name", input.intValue());
         Player player = (Player)context.getForWhom();
         int money = (int)Main.economy.getBalance(player);
+        if(input.intValue()<=0) {
+        	return this;
+        }
         if (money < input.intValue()) {
             return (Prompt)this;
         }

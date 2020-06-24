@@ -85,7 +85,6 @@ public class DrawTask extends BukkitRunnable
         ++Main.cb;
         for (String name : Main.lottery.keySet()) {
             List<String> bet = Other.data.getStringList("Bet");
-            Player play = Bukkit.getPlayer(name);
             for (String betlist : new ArrayList<String>(bet)) {
                 if (betlist.startsWith(name)) {
                     bet.remove(betlist);
@@ -93,18 +92,18 @@ public class DrawTask extends BukkitRunnable
                     break;
                 }
             }
-            switch (Main.lottery.get(play.getName())) {
+            switch (Main.lottery.get(name)) {
                 case 1: {
                     if (random % 2 == 0 || random == 100 || random == 99) {
                         continue;
                     }
-                    if (Main.info.containsKey(play.getName())) {
+                    if (Main.info.containsKey(name)) {
                         one.add(name);
                         Other.data.set("One", one);
                         String bets = name + ":1";
                         bet.add(bets);
                         Other.data.set("Bet", bet);
-                        Main.data.put(play.getName(), true);
+                        Main.data.put(name, true);
                         continue;
                     }
                     Bukkit.getPlayer(name).sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("Dealer")+Other.message.getString("ChooseWayNotDraw")));
@@ -114,13 +113,13 @@ public class DrawTask extends BukkitRunnable
                     if (random % 2 != 0 || random == 100) {
                         continue;
                     }
-                    if (Main.info.containsKey(play.getName())) {
+                    if (Main.info.containsKey(name)) {
                         two.add(name);
                         Other.data.set("Two", two);
                         String bets = name + ":2";
                         bet.add(bets);
                         Other.data.set("Bet", bet);
-                        Main.data.put(play.getName(), true);
+                        Main.data.put(name, true);
                         continue;
                     }
                     Bukkit.getPlayer(name).sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("Dealer")+Other.message.getString("ChooseWayNotDraw")));
@@ -130,13 +129,13 @@ public class DrawTask extends BukkitRunnable
                     if (random < 1 || random > 33) {
                         continue;
                     }
-                    if (Main.info.containsKey(play.getName())) {
+                    if (Main.info.containsKey(name)) {
                         small.add(name);
                         Other.data.set("Small", small);
                         String bets = name + ":3";
                         bet.add(bets);
                         Other.data.set("Bet", bet);
-                        Main.data.put(play.getName(), true);
+                        Main.data.put(name, true);
                         continue;
                     }
                     Bukkit.getPlayer(name).sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("Dealer")+Other.message.getString("ChooseWayNotDraw")));
@@ -146,13 +145,13 @@ public class DrawTask extends BukkitRunnable
                     if (random < 67 || random > 99) {
                         continue;
                     }
-                    if (Main.info.containsKey(play.getName())) {
+                    if (Main.info.containsKey(name)) {
                         big.add(name);
                         Other.data.set("Big", big);
                         String bets = name + ":4";
                         bet.add(bets);
                         Other.data.set("Bet", bet);
-                        Main.data.put(play.getName(), true);
+                        Main.data.put(name, true);
                         continue;
                     }
                     Bukkit.getPlayer(name).sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("Dealer")+Other.message.getString("ChooseWayNotDraw")));
@@ -165,13 +164,13 @@ public class DrawTask extends BukkitRunnable
                             if (random != numberss && random != numberss + 10 && random != numberss + 20 && random != numberss + 30 && random != numberss + 40 && random != numberss + 50 && random != numberss + 60 && random != numberss + 70 && random != numberss + 80 && random != numberss + 90) {
                                 continue;
                             }
-                            if (Main.info.containsKey(play.getName())) {
+                            if (Main.info.containsKey(name)) {
                                 number.add(name);
                                 Other.data.set("Number", number);
                                 String bets2 = name + ":5";
                                 bet.add(bets2);
                                 Other.data.set("Bet", bet);
-                                Main.data.put(play.getName(), true);
+                                Main.data.put(name, true);
                                 break;
                             }
                             Bukkit.getPlayer(name).sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("Dealer")+Other.message.getString("ChooseWayNotDraw")));
@@ -181,13 +180,13 @@ public class DrawTask extends BukkitRunnable
                             if (random != numberss && random != numberss + 1 && random != numberss + 2 && random != numberss + 3 && random != numberss + 4 && random != numberss + 5 && random != numberss + 6 && random != numberss + 7 && random != numberss + 8 && random != numberss + 9) {
                                 continue;
                             }
-                            if (Main.info.containsKey(play.getName())) {
+                            if (Main.info.containsKey(name)) {
                                 number.add(name);
                                 Other.data.set("Number", number);
                                 String bets2 = name + ":5";
                                 bet.add(bets2);
                                 Other.data.set("Bet", bet);
-                                Main.data.put(play.getName(), true);
+                                Main.data.put(name, true);
                                 break;
                             }
                             Bukkit.getPlayer(name).sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("Dealer")+Other.message.getString("ChooseWayNotDraw")));
@@ -197,13 +196,13 @@ public class DrawTask extends BukkitRunnable
                             if (random != numberss) {
                                 continue;
                             }
-                            if (Main.info.containsKey(play.getName())) {
+                            if (Main.info.containsKey(name)) {
                                 supernumber.add(name);
                                 Other.data.set("SuperNumber", supernumber);
                                 String bets2 = name + ":6";
                                 bet.add(bets2);
                                 Other.data.set("Bet", bet);
-                                Main.data.put(play.getName(), true);
+                                Main.data.put(name, true);
                                 break;
                             }
                             Bukkit.getPlayer(name).sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("Dealer")+Other.message.getString("ChooseWayNotDraw")));
@@ -285,24 +284,26 @@ public class DrawTask extends BukkitRunnable
         			.replace("[message]", message).replace("[randomnumbermessage]", randomnumbermessage).replace("[onemessage]", onemessage).replace("[twomessage]", twomessage)
         			.replace("[smallmessage]", smallmessage).replace("[bigmessage]", bigmessage).replace("[numbermessage]", numbermessage).replace("[supernumbermessage]", supernumbermessage)));
         }
-        for (String player : Main.info.keySet()) {
-            if (!Main.data.containsKey(player)) {
-                List<String> item = Other.data.getStringList("Player." + player);
-                List<String> ExpMoneylist = Other.data.getStringList("ExpMoney");
-                item.clear();
-                Other.data.set("Player." + player, item);
-                for (String ExpMoney : ExpMoneylist) {
-                    if (ExpMoney.startsWith(player)) {
-                        ExpMoneylist.remove(ExpMoney);
-                        Other.data.set("ExpMoney", ExpMoneylist);
-                        break;
+        if(Main.info.size()!=0) {
+            for (String player : new ArrayList<String>(Main.info.keySet())) {
+                if (!Main.data.containsKey(player)) {
+                    List<String> item = Other.data.getStringList("Player." + player);
+                    List<String> ExpMoneylist = Other.data.getStringList("ExpMoney");
+                    item.clear();
+                    Other.data.set("Player." + player, item);
+                    for (String ExpMoney : new ArrayList<String>(ExpMoneylist)) {
+                        if (ExpMoney.startsWith(player)) {
+                            ExpMoneylist.remove(ExpMoney);
+                            Other.data.set("ExpMoney", ExpMoneylist);
+                            break;
+                        }
                     }
+                    Main.info.remove(player);
+                    if (random != 100) {
+                        continue;
+                    }
+                    Bukkit.getPlayer(player).sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("Dealer")+Other.message.getString("NotAnyDraw")));
                 }
-                Main.info.remove(player);
-                if (random != 100) {
-                    continue;
-                }
-                Bukkit.getPlayer(player).sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("Dealer")+Other.message.getString("NotAnyDraw")));
             }
         }
         int way = 0;
@@ -323,7 +324,7 @@ public class DrawTask extends BukkitRunnable
                         int type = Integer.parseInt(ExpMoney2.split(":")[1]);
                         int numbers = Integer.parseInt(ExpMoney2.split(":")[2]);
                         if (type == 1) {
-                            for (String bet2 : Bet) {
+                            for (String bet2 : new ArrayList<String>(Bet)) {
                                 if (bet2.startsWith(player.getName() + ":")) {
                                     int multiple = 0;
                                     switch (Integer.parseInt(bet2.split(":")[1])) {
@@ -365,7 +366,7 @@ public class DrawTask extends BukkitRunnable
                         if (type != 2) {
                             continue;
                         }
-                        for (String bet2 : Bet) {
+                        for (String bet2 : new ArrayList<String>(Bet)) {
                             if (bet2.startsWith(player.getName() + ":")) {
                                 int multiple = 0;
                                 switch (Integer.parseInt(bet2.split(":")[1])) {

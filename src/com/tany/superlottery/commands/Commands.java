@@ -166,7 +166,7 @@ public class Commands implements CommandExecutor
                             if (type != 2) {
                                 continue;
                             }
-                            for (String bet : Bet) {
+                            for (String bet : new ArrayList<String>(Bet)) {
                                 if (bet.startsWith(sender.getName() + ":")) {
                                     int betnumber = Integer.parseInt(bet.split(":")[1]);
                                     int multiple = 0;

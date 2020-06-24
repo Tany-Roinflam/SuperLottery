@@ -70,7 +70,7 @@ public class Event implements Listener
                     if (i == 6) {
                         p.closeInventory();
                         p.sendMessage("§a提示：你输入的数字决定了你下注的号码");
-                        Conversation conversation = new Conversation((Plugin)Main.getInstance(), (Conversable)p, (Prompt)new NumberPrompt());
+                        Conversation conversation = new Conversation(Main.getInstance(), p, new NumberPrompt());
                         p.beginConversation(conversation);
                         return;
                     }
@@ -103,13 +103,13 @@ public class Event implements Listener
                         return;
                     }
                 }
-                int money = (int)Main.economy.getBalance((OfflinePlayer)p);
+                int money = (int)Main.economy.getBalance(p);
                 p.sendMessage("§e你的游戏币为§6" + money);
                 if (money <= 0) {
                     p.sendMessage("§e你没有游戏币下不了注");
                     return;
                 }
-                Conversation moneyconversation = new Conversation((Plugin)Main.getInstance(), (Conversable)p, (Prompt)new MoneyPrompt());
+                Conversation moneyconversation = new Conversation(Main.getInstance(), p, new MoneyPrompt());
                 p.beginConversation(moneyconversation);
                 p.sendMessage("§6请输入一个小于或等于你§e游戏币§6的数字");
                 p.closeInventory();
@@ -143,7 +143,7 @@ public class Event implements Listener
                     return;
                 }
                 p.sendMessage("§a请输入一个小于或等于你经验的数字");
-                Conversation xpconversation = new Conversation((Plugin)Main.getInstance(), (Conversable)p, (Prompt)new LevelPrompt());
+                Conversation xpconversation = new Conversation(Main.getInstance(), p, new LevelPrompt());
                 p.beginConversation(xpconversation);
                 p.closeInventory();
             }
@@ -194,7 +194,7 @@ public class Event implements Listener
                                 break;
                             }
                         }
-                        if (checks.getItemMeta().hasLore() && checks.getItemMeta().getLore().contains(ChatColor.translateAlternateColorCodes('&', Other.config.getString("SetLore")))) {
+                        if (checks.hasItemMeta()&&checks.getItemMeta().hasLore() && checks.getItemMeta().getLore().contains(ChatColor.translateAlternateColorCodes('&', Other.config.getString("SetLore")))) {
                             ++nolore;
                         }
                     }
@@ -214,7 +214,7 @@ public class Event implements Listener
                                 break;
                             }
                         }
-                        if (checkss.getItemMeta().hasLore() && checks.getItemMeta().getLore().contains(ChatColor.translateAlternateColorCodes('&', Other.config.getString("SetLore")))) {
+                        if (checkss.hasItemMeta()&&checkss.getItemMeta().hasLore() && checks.getItemMeta().getLore().contains(ChatColor.translateAlternateColorCodes('&', Other.config.getString("SetLore")))) {
                             ++nolore;
                         }
                     }
@@ -234,7 +234,7 @@ public class Event implements Listener
                                 break;
                             }
                         }
-                        if (checksss.getItemMeta().hasLore() && checks.getItemMeta().getLore().contains(ChatColor.translateAlternateColorCodes('&', Other.config.getString("SetLore")))) {
+                        if (checksss.hasItemMeta()&&checksss.getItemMeta().hasLore() && checks.getItemMeta().getLore().contains(ChatColor.translateAlternateColorCodes('&', Other.config.getString("SetLore")))) {
                             ++nolore;
                         }
                     }
@@ -345,4 +345,28 @@ public class Event implements Listener
             }
         }
     }
+    
+	@EventHandler
+	public void Close(InventoryCloseEvent event) {
+		if(!event.getInventory().getTitle().startsWith("§e下§a注§c界§b面")) {
+			return;
+		}
+		if(Main.info.containsKey(event.getPlayer().getName())) {
+			return;
+		}
+        for(int i=0;i <= 6;i++) {
+            ItemStack oneitem = event.getInventory().getItem(10 + i);
+            ItemStack twoitem = event.getInventory().getItem(19 + i);
+            ItemStack threeitem = event.getInventory().getItem(28 + i);
+            if(oneitem!=null&&oneitem.getType()!=Material.AIR) {
+            	event.getPlayer().getInventory().addItem(oneitem);
+            }
+            if(twoitem!=null&&oneitem.getType()!=Material.AIR) {
+            	event.getPlayer().getInventory().addItem(twoitem);
+            }
+            if(threeitem!=null&&oneitem.getType()!=Material.AIR) {
+            	event.getPlayer().getInventory().addItem(threeitem);
+            }
+        }
+	}
 }
