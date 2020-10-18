@@ -13,52 +13,54 @@ public class Gui
 {
     public static void gui(Player p) {
         Inventory gui = Bukkit.createInventory((InventoryHolder)null, 54, "§e下§a注§c界§b面");
-        ItemStack frame = new ItemStack(Material.STAINED_GLASS_PANE);
-        ItemStack single = new ItemStack(Material.WOOL);
-        ItemStack twin = new ItemStack(Material.WOOL);
-        ItemStack big = new ItemStack(Material.WOOL);
-        ItemStack small = new ItemStack(Material.WOOL);
-        ItemStack number = new ItemStack(Material.WOOL);
-        ItemStack money = new ItemStack(Material.WOOL);
-        ItemStack xp = new ItemStack(Material.WOOL);
+        ItemStack frame = BasicLibrary.stainedglass.get(4);
+        ItemStack single = BasicLibrary.stainedwool.get(0);
+        ItemStack twin = BasicLibrary.stainedwool.get(1);
+        ItemStack big = BasicLibrary.stainedwool.get(11);
+        ItemStack small = BasicLibrary.stainedwool.get(3);
+        ItemStack number = BasicLibrary.stainedwool.get(14);
+        ItemStack money = BasicLibrary.stainedwool.get(4);
+        ItemStack xp = BasicLibrary.stainedwool.get(10);
         ItemStack confirm = new ItemStack(Material.BEACON);
+        
         ItemMeta framedata = frame.getItemMeta();
         List<String> lore = new ArrayList<String>();
+        
         framedata.setDisplayName("§e分隔栏");
         lore.add("§f请§a在§b圈§d内§c下§e注");
         lore.add("§c同一轮只能选择一种下注类型");
-        frame.setDurability((short)4);
         framedata.setLore(lore);
         frame.setItemMeta(framedata);
         lore.clear();
+        
         framedata.setDisplayName("§e下注：§f单");
         lore.add("§e下注数值1-98范围内的单数");
         lore.add("§a下§b注§c赔§6率§e§l1§3§l ： §f§l" + Other.config.getInt("SadOdds"));
-        single.setDurability((short)0);
         framedata.setLore(lore);
         single.setItemMeta(framedata);
         lore.clear();
+        
         framedata.setDisplayName("§e下注：双");
         lore.add("§f下注数字1-98范围内的双数");
         lore.add("§a下§b注§c赔§6率§e§l1§3§l ： §e§l" + Other.config.getInt("SadOdds"));
-        twin.setDurability((short)1);
         framedata.setLore(lore);
         twin.setItemMeta(framedata);
         lore.clear();
+        
         framedata.setDisplayName("§e下注：§b小");
         lore.add("§3下注数字1-33");
         lore.add("§a下§b注§c赔§6率§e§l1§3§l ： §b§l" + Other.config.getInt("SizeOdds"));
-        small.setDurability((short)3);
         framedata.setLore(lore);
         small.setItemMeta(framedata);
         lore.clear();
+        
         framedata.setDisplayName("§e下注：§3大");
         lore.add("§b下注数字67-99");
         lore.add("§a下§b注§c赔§6率§e§l1§3§l ： §3§l" + Other.config.getInt("SizeOdds"));
-        big.setDurability((short)11);
         framedata.setLore(lore);
         big.setItemMeta(framedata);
         lore.clear();
+        
         framedata.setDisplayName("§e下注：§d自§c选§e数§9字");
         lore.add("§d自§c选§e数§9字");
         lore.add("§a点击后输入一个1-99的数字");
@@ -68,32 +70,32 @@ public class Gui
         lore.add("§9当均不满足以上条件时，只有中了那个数字才会中奖，但奖励极为丰厚");
         lore.add("\n§b范§a围§c数§4字§a下§b注§c赔§6率§e§l1§3§l ： §6§l" + Other.config.getInt("NumberOdds"));
         lore.add("§9指§6定§c数§4字§a下§b注§c赔§6率§e§l1§3§l ： §4§l" + Other.config.getInt("SuperOdds"));
-        number.setDurability((short)14);
         framedata.setLore(lore);
         number.setItemMeta(framedata);
         lore.clear();
+        
         framedata.setDisplayName("§e确§a定§d下§3注 §e类型：§6游戏币");
         lore.add("§e下注类型为游戏币");
         if (Bukkit.getPluginManager().getPlugin("Vault") == null) {
             lore.add("§c§l此类型不可用");
         }
-        money.setDurability((short)4);
         framedata.setLore(lore);
         money.setItemMeta(framedata);
         lore.clear();
+        
         framedata.setDisplayName("§e确§a定§d下§3注 类型：§5经验");
         lore.add("§d下注类型为经验");
-        xp.setDurability((short)10);
         framedata.setLore(lore);
         xp.setItemMeta(framedata);
         lore.clear();
+        
         framedata.setDisplayName("§e确§a定§d下§3注");
         lore.add("§9确定");
         lore.add("§4注意！§6一旦确认后无法更改！");
-        confirm.setDurability((short)0);
         framedata.setLore(lore);
         confirm.setItemMeta(framedata);
         lore.clear();
+        
         gui.setItem(0, frame);
         gui.setItem(1, frame);
         gui.setItem(2, frame);
@@ -142,10 +144,10 @@ public class Gui
     }
     
     public static void list(Player player, Integer type) {
-        ItemStack frame = new ItemStack(Material.STAINED_GLASS_PANE);
+        ItemStack frame = BasicLibrary.stainedglass.get(4);
         Inventory gui = Bukkit.createInventory((InventoryHolder)null, 54, "§a可下注列表§b：§2第§6" + type + "§2页");
-        ItemStack xiaye = new ItemStack(Material.STAINED_GLASS_PANE);
-        ItemStack shangye = new ItemStack(Material.STAINED_GLASS_PANE);
+        ItemStack xiaye = BasicLibrary.stainedglass.get(14);
+        ItemStack shangye = BasicLibrary.stainedglass.get(11);
         List<String> list = Other.data.getStringList("Item");
         if (list.size() >= (type - 1) * 45 + 1) {
             for (int i = (type - 1) * 45, ia = 0, size = list.size() - 1; i <= size && i <= 44 + (type - 1) * 45; ++i, ++ia) {
@@ -169,24 +171,25 @@ public class Gui
             }
             ItemMeta framedata = frame.getItemMeta();
             ArrayList<String> empty = new ArrayList<String>();
+            
             framedata.setDisplayName("§c介§5绍");
             empty.add("§f这§a里§b显§d示§c的§e是§4可§d下§2注§6物§5品");
-            frame.setDurability((short)4);
             framedata.setLore(empty);
             frame.setItemMeta(framedata);
             empty.clear();
+            
             framedata.setDisplayName("§a下一页");
             empty.add("§a翻§c到§d下§f一§e页");
-            xiaye.setDurability((short)14);
             framedata.setLore(empty);
             xiaye.setItemMeta(framedata);
             empty.clear();
+            
             framedata.setDisplayName("§a上一页");
             empty.add("§f翻§b到§2上§3一§1页");
-            shangye.setDurability((short)11);
             framedata.setLore(empty);
             shangye.setItemMeta(framedata);
             empty.clear();
+            
             if (type > 1) {
                 gui.setItem(45, shangye);
             }

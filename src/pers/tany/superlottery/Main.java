@@ -29,7 +29,6 @@ public class Main extends JavaPlugin
     public static HashMap<String, Boolean> info;
     public static HashMap<String, Integer> itemsizes;
     public static Economy economy;
-    public boolean vault;
     
     static {
         Main.i = 0;
@@ -45,58 +44,50 @@ public class Main extends JavaPlugin
         Main.economy = null;
     }
     
-    public Main() {
-        this.vault = false;
-    }
-    
     public static Main getInstance() {
         return Main.instance;
     }
     
-    public boolean onEconomy() {
+    public void Vault() {
   	    RegisteredServiceProvider<Economy> money = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
-  	    if ((money != null) && ((Main.economy = (Economy)money.getProvider()) == null)) {
-  	    	vault = true;
-  	    }
-  	    return vault = false;
+  	    Main.economy = money.getProvider();
   	}
     
     public void onEnable() {
         Bukkit.getConsoleSender().sendMessage("§e[§6superlottery§e]§a插件已启用");
-        if (!new File(this.getDataFolder(), "config.yml").exists()) {
-            this.saveDefaultConfig();
+        Main.plugin = this;
+        if (!new File(getDataFolder(), "config.yml").exists()) {
+        	saveResource("config.yml", false);
         }
-        if (!new File(this.getDataFolder(), "data.yml").exists()) {
-            this.saveResource("data.yml", false);
+        if (!new File(getDataFolder(), "data.yml").exists()) {
+            saveResource("data.yml", false);
         }
-        if (!new File(this.getDataFolder(), "message.yml").exists()) {
-            this.saveResource("message.yml", false);
+        if (!new File(getDataFolder(), "message.yml").exists()) {
+            saveResource("message.yml", false);
         }
-        if (this.getConfig().getBoolean("StartStopBetTime")) {
-            new StopBetTask().runTaskTimer((Plugin)this, (long)((this.getConfig().getInt("StopBetTime") + this.getConfig().getInt("BetTime")) * 20), (long)(this.getConfig().getInt("DrawTime") * 20));
+        if (Other.config.getBoolean("StartStopBetTime")) {
+            new StopBetTask().runTaskTimer(this, (long)((Other.config.getInt("StopBetTime") + Other.config.getInt("BetTime")) * 20), (long)(Other.config.getInt("DrawTime") * 20));
         }
-        if (this.getConfig().getBoolean("Countdownone")) {
-            new Countdownone().runTaskTimer((Plugin)this, (long)((this.getConfig().getInt("DrawTime") - this.getConfig().getInt("CountdownoneTime")) * 20), (long)(this.getConfig().getInt("DrawTime") * 20));
+        if (Other.config.getBoolean("Countdownone")) {
+            new Countdownone().runTaskTimer(this, (long)((Other.config.getInt("DrawTime") - Other.config.getInt("CountdownoneTime")) * 20), (long)(Other.config.getInt("DrawTime") * 20));
         }
-        if (this.getConfig().getBoolean("Countdowntwo")) {
-            new Countdowntwo().runTaskTimer((Plugin)this, (long)((this.getConfig().getInt("DrawTime") - this.getConfig().getInt("CountdowntwoTime")) * 20), (long)(this.getConfig().getInt("DrawTime") * 20));
+        if (Other.config.getBoolean("Countdowntwo")) {
+            new Countdowntwo().runTaskTimer(this, (long)((Other.config.getInt("DrawTime") - Other.config.getInt("CountdowntwoTime")) * 20), (long)(Other.config.getInt("DrawTime") * 20));
         }
-        if (this.getConfig().getBoolean("Countdownthree")) {
-            new Countdownthree().runTaskTimer((Plugin)this, (long)((this.getConfig().getInt("DrawTime") - this.getConfig().getInt("CountdownthreeTime")) * 20), (long)(this.getConfig().getInt("DrawTime") * 20));
+        if (Other.config.getBoolean("Countdownthree")) {
+            new Countdownthree().runTaskTimer(this, (long)((Other.config.getInt("DrawTime") - Other.config.getInt("CountdownthreeTime")) * 20), (long)(Other.config.getInt("DrawTime") * 20));
         }
         if (Bukkit.getPluginManager().getPlugin("Vault") == null) {
             Bukkit.getConsoleSender().sendMessage("§e[§6superlottery§e]§c未检测到§6Vault§c插件，游戏币下注功能未启用");
-        }
-        else {
+        } else {
             Bukkit.getConsoleSender().sendMessage("§e[§6superlottery§e]§6检测到§eVault§6插件，已启用");
-            this.vault = this.onEconomy();
+            Vault();
         }
-        Main.plugin = (Plugin)this;
-        this.getCommand("sl").setExecutor((CommandExecutor)new Commands());
-        this.getCommand("superlottery").setExecutor((CommandExecutor)new Commands());
-        this.getServer().getPluginManager().registerEvents((Listener)new Event(), (Plugin)this);
-        new BetTask().runTaskTimer((Plugin)this, (long)(this.getConfig().getInt("BetTime") * 20), (long)(this.getConfig().getInt("DrawTime") * 20));
-        new DrawTask().runTaskTimer((Plugin)this, (long)(this.getConfig().getInt("DrawTime") * 20), (long)(this.getConfig().getInt("DrawTime") * 20));
+        new BasicLibrary();
+        getCommand("sl").setExecutor((CommandExecutor)new Commands());
+        getServer().getPluginManager().registerEvents((Listener)new Event(), this);
+        new BetTask().runTaskTimer(this, (long)(Other.config.getInt("BetTime") * 20), (long)(Other.config.getInt("DrawTime") * 20));
+        new DrawTask().runTaskTimer(this, (long)(Other.config.getInt("DrawTime") * 20), (long)(Other.config.getInt("DrawTime") * 20));
     }
     
     public void onDisable() {

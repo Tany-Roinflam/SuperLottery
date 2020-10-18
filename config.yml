@@ -68,8 +68,8 @@ PeopleProbability: 1
 BetNumber: false
 #开奖多少次通吃一次
 BetTakeAll: 5
-#开奖多少次增加一次通吃几率
 
+#开奖多少次增加一次通吃几率
 AddProbabilityNumber: 6
 #增加的概率
 AddProbability: 10

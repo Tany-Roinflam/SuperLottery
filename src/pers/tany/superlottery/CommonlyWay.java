@@ -1,6 +1,7 @@
 package pers.tany.superlottery;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
@@ -131,11 +132,10 @@ public class CommonlyWay {
   		
 //		给予玩家物品，如果背包满则在原地生成掉落物
 		public static void GiveItem(Player player,ItemStack item) {
-			if(player.getInventory().firstEmpty()==-1) {
-				player.getWorld().dropItemNaturally(player.getLocation(), item);
-			} else {
-				player.getInventory().addItem(item);
-			}
+            HashMap<Integer,ItemStack> itemlist = new HashMap<Integer,ItemStack>(player.getInventory().addItem(item));
+            for(ItemStack i:itemlist.values()) {
+                player.getWorld().dropItemNaturally(player.getLocation(), i);
+            }
 		}
 		
 //		判断玩家是否为空手，空手则true

@@ -1,6 +1,5 @@
 package pers.tany.superlottery.commands;
 
-import org.bukkit.plugin.*;
 import org.bukkit.command.*;
 
 import java.io.*;
@@ -19,18 +18,6 @@ import org.bukkit.configuration.file.*;
 
 public class Commands implements CommandExecutor
 {
-    Plugin config;
-    File file1;
-    File file2;
-    File file3;
-    
-    public Commands() {
-        config = Bukkit.getPluginManager().getPlugin("SuperLottery");
-        file1 = new File(config.getDataFolder(), "config.yml");
-        file2 = new File(config.getDataFolder(), "data.yml");
-        file3 = new File(config.getDataFolder(), "message.yml");
-    }
-    
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("gui")) {
@@ -99,12 +86,13 @@ public class Commands implements CommandExecutor
                 }
                 list.add(item);
                 Other.data.set("Item", list);
-                try {
-                    Other.data.save(file2);
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
+		    	try {
+		    		File file=new File(Main.plugin.getDataFolder(),"data.yml");
+					Other.data.save(file);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
                 p.sendMessage("§a添加成功");
                 return true;
             }
@@ -157,12 +145,13 @@ public class Commands implements CommandExecutor
                                         ExpMoneylist.remove(ExpMoney);
                                         Other.data.set("Bet", Bet);
                                         Other.data.set("ExpMoney", ExpMoneylist);
-                                        try {
-                                            Other.data.save(file2);
-                                        }
-                                        catch (IOException e2) {
-                                            e2.printStackTrace();
-                                        }
+                				    	try {
+                				    		File file=new File(Main.plugin.getDataFolder(),"data.yml");
+                							Other.data.save(file);
+                						} catch (IOException e) {
+                							// TODO Auto-generated catch block
+                							e.printStackTrace();
+                						}
                                     }
                                 }
                             }
@@ -193,12 +182,13 @@ public class Commands implements CommandExecutor
                                     ExpMoneylist.remove(ExpMoney);
                                     Other.data.set("Bet", Bet);
                                     Other.data.set("ExpMoney", ExpMoneylist);
-                                    try {
-                                        Other.data.save(file2);
-                                    }
-                                    catch (IOException e3) {
-                                        e3.printStackTrace();
-                                    }
+            				    	try {
+            				    		File file=new File(Main.plugin.getDataFolder(),"data.yml");
+            							Other.data.save(file);
+            						} catch (IOException e) {
+            							// TODO Auto-generated catch block
+            							e.printStackTrace();
+            						}
                                 }
                             }
                         }
@@ -304,17 +294,18 @@ public class Commands implements CommandExecutor
                                 }
                             }
                         }
-                        try {
-                            Other.data.save(file2);
-                        }
-                        catch (IOException e4) {
-                            e4.printStackTrace();
-                        }
+				    	try {
+				    		File file=new File(Main.plugin.getDataFolder(),"data.yml");
+							Other.data.save(file);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
                     }
                 }
                 return true;
             }
-            else if (args[0].equalsIgnoreCase("start")) {
+            if (args[0].equalsIgnoreCase("start")) {
                 if (!Other.config.getBoolean("BlackBox")) {
                     sender.sendMessage("§c未开启暗箱功能");
                     return true;
@@ -333,85 +324,85 @@ public class Commands implements CommandExecutor
                 Main.count = false;
                 return true;
             }
-            else if (args[0].equalsIgnoreCase("reload")) {
+            if (args[0].equalsIgnoreCase("reload")) {
                 if (sender.isOp()) {
-                    Other.config = (FileConfiguration)YamlConfiguration.loadConfiguration(file1);
-                    Other.data = (FileConfiguration)YamlConfiguration.loadConfiguration(file2);
-                    Other.message = (FileConfiguration)YamlConfiguration.loadConfiguration(file3);
+    			    File file=new File(Main.plugin.getDataFolder(),"config.yml");
+    			    File file1=new File(Main.plugin.getDataFolder(),"data.yml");
+    			    File file2=new File(Main.plugin.getDataFolder(),"message.yml");
+    				Other.config = YamlConfiguration.loadConfiguration(file);
+    				Other.data = YamlConfiguration.loadConfiguration(file1);
+    				Other.message = YamlConfiguration.loadConfiguration(file2);
                     sender.sendMessage("§a重载成功");
                     return true;
                 }
                 sender.sendMessage("§c你没有权限使用此指令");
                 return true;
             }
-            else {
-                if (Other.config.getBoolean("BlackBox") && args[0].equalsIgnoreCase("set")) {
-                    sender.sendMessage("§c请输入数字");
-                    return true;
-                }
-                if (args[0].equalsIgnoreCase("set")) {
-                    sender.sendMessage("§c未开启暗箱功能");
-                    return true;
-                }
-            }
-        }
-        if (args.length == 2) {
-            if (!Other.config.getBoolean("BlackBox") || !args[0].equalsIgnoreCase("set")) {
-                sender.sendMessage("§c未开启暗箱功能");
-                return true;
-            }
-            if (!sender.isOp()) {
-                sender.sendMessage("§c你没有权限使用此指令");
-                return true;
-            }
-            int number;
-            try {
-                number = Integer.parseInt(args[1]);
-            }
-            catch (NumberFormatException e5) {
+            if (Other.config.getBoolean("BlackBox") && args[0].equalsIgnoreCase("set")) {
                 sender.sendMessage("§c请输入数字");
                 return true;
             }
-            if (number <= 0 || number >= 101) {
-                sender.sendMessage("§c请输入一个范围为1-100的数字");
+            if (args[0].equalsIgnoreCase("set")) {
+                sender.sendMessage("§c未开启暗箱功能");
                 return true;
             }
-            if (number == 100) {
-                Main.setrandom = number;
-                sender.sendMessage("§6已设置下一次开奖为§4§l通吃");
-                return true;
-            }
-            Main.setrandom = number;
-            sender.sendMessage("§a已设置下一次开奖数字为§6" + number);
-            return true;
         }
-        else {
-            if (!sender.isOp()) {
-                sender.sendMessage("§a/sl gui  §2下注");
-                sender.sendMessage("§a/sl rule  §2查看可下注物品");
-                sender.sendMessage("§a/sl draw  §2领取剩下下注未被领取的物品");
+        if (args.length == 2) {
+        	if(args[0].equalsIgnoreCase("set")) {
+                if (!Other.config.getBoolean("BlackBox")) {
+                    sender.sendMessage("§c未开启暗箱功能");
+                    return true;
+                }
+                if (!sender.isOp()) {
+                    sender.sendMessage("§c你没有权限使用此指令");
+                    return true;
+                }
+                int number;
+                try {
+                    number = Integer.parseInt(args[1]);
+                } catch (NumberFormatException e5) {
+                    sender.sendMessage("§c请输入数字");
+                    return true;
+                }
+                if (number <= 0 || number >= 101) {
+                    sender.sendMessage("§c请输入一个范围为1-100的数字");
+                    return true;
+                }
+                if (number == 100) {
+                    Main.setrandom = number;
+                    sender.sendMessage("§6已设置下一次开奖为§4§l通吃");
+                    return true;
+                }
+                Main.setrandom = number;
+                sender.sendMessage("§a已设置下一次开奖数字为§6" + number);
                 return true;
-            }
-            if (Other.config.getBoolean("BlackBox")) {
-                sender.sendMessage("§e[]======§e[§6superlottery§e]§6抽奖系统§e======[]");
-                sender.sendMessage("§a/sl gui  §2下注");
-                sender.sendMessage("§a/sl rule  §2查看可下注物品");
-                sender.sendMessage("§a/sl add  §2添加手上物品到可下注内容");
-                sender.sendMessage("§a/sl draw  §2领取剩下下注未被领取的物品");
-                sender.sendMessage("§a/sl set §6数字  §2设置下一次的随机数为 '§6数字§2' ");
-                sender.sendMessage("§a/sl start  §2直接开始一次结算下注结果");
-                sender.sendMessage("§a/sl reload  §2重载配置文件");
-                sender.sendMessage("§e[]==================================[]");
-                return true;
-            }
-            sender.sendMessage("§e[]======§e[§6superlottery§e]§6抽奖系统§e======[]");
+        	}
+        }
+        if (!sender.isOp()) {
             sender.sendMessage("§a/sl gui  §2下注");
             sender.sendMessage("§a/sl rule  §2查看可下注物品");
             sender.sendMessage("§a/sl draw  §2领取剩下下注未被领取的物品");
+            return true;
+        }
+        if (Other.config.getBoolean("BlackBox")) {
+            sender.sendMessage("§e[]======§e[§6superlottery§e]§6抽奖系统§e======[]");
+            sender.sendMessage("§a/sl gui  §2下注");
+            sender.sendMessage("§a/sl rule  §2查看可下注物品");
             sender.sendMessage("§a/sl add  §2添加手上物品到可下注内容");
+            sender.sendMessage("§a/sl draw  §2领取剩下下注未被领取的物品");
+            sender.sendMessage("§a/sl set §6数字  §2设置下一次的随机数为 '§6数字§2' ");
+            sender.sendMessage("§a/sl start  §2直接开始一次结算下注结果");
             sender.sendMessage("§a/sl reload  §2重载配置文件");
             sender.sendMessage("§e[]==================================[]");
             return true;
         }
+        sender.sendMessage("§e[]======§e[§6superlottery§e]§6抽奖系统§e======[]");
+        sender.sendMessage("§a/sl gui  §2下注");
+        sender.sendMessage("§a/sl rule  §2查看可下注物品");
+        sender.sendMessage("§a/sl draw  §2领取剩下下注未被领取的物品");
+        sender.sendMessage("§a/sl add  §2添加手上物品到可下注内容");
+        sender.sendMessage("§a/sl reload  §2重载配置文件");
+        sender.sendMessage("§e[]==================================[]");
+        return true;
     }
 }

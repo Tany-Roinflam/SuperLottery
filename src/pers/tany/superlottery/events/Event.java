@@ -17,16 +17,7 @@ import org.bukkit.inventory.*;
 import java.util.*;
 import org.bukkit.event.*;
 
-public class Event implements Listener
-{
-    Plugin config;
-    File file;
-    
-    public Event() {
-        config = Bukkit.getPluginManager().getPlugin("SuperLottery");
-        file = new File(config.getDataFolder(), "data.yml");
-    }
-    
+public class Event implements Listener {
     @EventHandler
     public void InventoryClick(InventoryClickEvent a) {
         Inventory inventory = a.getClickedInventory();
@@ -37,7 +28,7 @@ public class Event implements Listener
         if (!(a.getWhoClicked() instanceof Player)) {
             return;
         }
-        if (a.getClickedInventory().getTitle().startsWith("§e下§a注§c界§b面") && (a.getSlot() <= 8 || a.getSlot() >= 36 || a.getSlot() == 9 || a.getSlot() == 18 || a.getSlot() == 27 || a.getSlot() == 17 || a.getSlot() == 26 || a.getSlot() == 35)) {
+        if (a.getClickedInventory().getType() != InventoryType.PLAYER && p.getOpenInventory().getTitle().startsWith("§e下§a注§c界§b面") && (a.getSlot() <= 8 || a.getSlot() >= 36 || a.getSlot() == 9 || a.getSlot() == 18 || a.getSlot() == 27 || a.getSlot() == 17 || a.getSlot() == 26 || a.getSlot() == 35)) {
             a.setCancelled(true);
             if (a.getSlot() == 45) {
                 Main.lottery.put(p.getName(), 1);
@@ -263,12 +254,13 @@ public class Event implements Listener
                 List<String> shui = (List<String>)Other.data.getStringList("Player." + p.getName());
                 shui.clear();
                 Other.data.set("Player." + p.getName(), shui);
-                try {
-                    Other.data.save(file);
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
+		    	try {
+		    		File file=new File(Main.plugin.getDataFolder(),"data.yml");
+					Other.data.save(file);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
                 for (int from = 10; from <= 34; ++from) {
                     if (from != 17 && from != 18 && from != 26 && from != 27) {
                         ItemStack check = a.getInventory().getItem(from);
@@ -296,78 +288,82 @@ public class Event implements Listener
                         }
                     }
                 }
-                try {
-                    Other.data.save(file);
-                }
-                catch (IOException e2) {
-                    e2.printStackTrace();
-                }
+		    	try {
+		    		File file=new File(Main.plugin.getDataFolder(),"data.yml");
+					Other.data.save(file);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
                 Main.info.put(p.getName(), true);
                 p.closeInventory();
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', Other.message.getString("SuccessBetMessage")));
             }
         }
-        if (a.getClickedInventory().getTitle().startsWith("§a可下注列表§b：§2第§6")) {
+        if (p.getOpenInventory().getTitle().startsWith("§a可下注列表§b：§2第§6")) {
             a.setCancelled(true);
-            String title = a.getClickedInventory().getTitle();
-            int type = Integer.parseInt(title.replace("§a可下注列表§b：§2第§6", "").replace("§2页", ""));
-            if (a.getCurrentItem() == null || a.getCurrentItem().getType() == Material.AIR) {
-                return;
-            }
-            if (a.getClickedInventory().getItem(53).getItemMeta().getDisplayName().equals("§a下一页") && a.getRawSlot() == 53) {
-                Gui.list(p, ++type);
-                return;
-            }
-            if (a.getClickedInventory().getItem(45).getItemMeta().getDisplayName().equals("§a上一页") && a.getRawSlot() == 45) {
-                Gui.list(p, --type);
-                return;
-            }
-            if (p.isOp()) {
-                if (a.getRawSlot() > 44) {
+            if(a.getClickedInventory().getType() != InventoryType.PLAYER) {
+                String title = p.getOpenInventory().getTitle();
+                int type = Integer.parseInt(title.replace("§a可下注列表§b：§2第§6", "").replace("§2页", ""));
+                if (a.getCurrentItem() == null || a.getCurrentItem().getType() == Material.AIR) {
                     return;
                 }
-                List<String> data = (List<String>)Other.data.getStringList("Item");
-                data.remove(data.get(a.getRawSlot() + (type - 1) * 45));
-                Other.data.set("Item", data);
-                try {
-                    Other.data.save(file);
+                if (a.getClickedInventory().getItem(53).getItemMeta().getDisplayName().equals("§a下一页") && a.getRawSlot() == 53) {
+                    Gui.list(p, ++type);
+                    return;
                 }
-                catch (IOException e3) {
-                    e3.printStackTrace();
+                if (a.getClickedInventory().getItem(45).getItemMeta().getDisplayName().equals("§a上一页") && a.getRawSlot() == 45) {
+                    Gui.list(p, --type);
+                    return;
                 }
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    if (player.getOpenInventory().getTitle().startsWith("§a可下注列表§b：§2第§6")) {
-                        String titles = a.getClickedInventory().getTitle();
-                        int types = Integer.parseInt(titles.replace("§a可下注列表§b：§2第§6", "").replace("§2页", ""));
-                        player.closeInventory();
-                        Gui.list(player, types);
+                if (p.isOp()) {
+                    if (a.getRawSlot() > 44) {
+                        return;
                     }
+                    List<String> data = (List<String>)Other.data.getStringList("Item");
+                    data.remove(data.get(a.getRawSlot() + (type - 1) * 45));
+                    Other.data.set("Item", data);
+    		    	try {
+    		    		File file=new File(Main.plugin.getDataFolder(),"data.yml");
+    					Other.data.save(file);
+    				} catch (IOException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        if (player.getOpenInventory().getTitle().startsWith("§a可下注列表§b：§2第§6")) {
+                            String titles = p.getOpenInventory().getTitle();
+                            int types = Integer.parseInt(titles.replace("§a可下注列表§b：§2第§6", "").replace("§2页", ""));
+                            player.closeInventory();
+                            Gui.list(player, types);
+                        }
+                    }
+                    p.sendMessage("§a成功移除此物品！");
                 }
-                p.sendMessage("§a成功移除此物品！");
             }
         }
     }
     
 	@EventHandler
-	public void Close(InventoryCloseEvent event) {
-		if(!event.getInventory().getTitle().startsWith("§e下§a注§c界§b面")) {
+	public void Close(InventoryCloseEvent evt) {
+		if(evt.getInventory()!=null&&evt.getView().getTitle()!=null&&!evt.getView().getTitle().startsWith("§e下§a注§c界§b面")) {
 			return;
 		}
-		if(Main.info.containsKey(event.getPlayer().getName())) {
+		if(Main.info.containsKey(evt.getPlayer().getName())) {
 			return;
 		}
         for(int i=0;i <= 6;i++) {
-            ItemStack oneitem = event.getInventory().getItem(10 + i);
-            ItemStack twoitem = event.getInventory().getItem(19 + i);
-            ItemStack threeitem = event.getInventory().getItem(28 + i);
+            ItemStack oneitem = evt.getInventory().getItem(10 + i);
+            ItemStack twoitem = evt.getInventory().getItem(19 + i);
+            ItemStack threeitem = evt.getInventory().getItem(28 + i);
             if(oneitem!=null&&oneitem.getType()!=Material.AIR) {
-            	CommonlyWay.GiveItem((Player) event.getPlayer(), oneitem);
+            	CommonlyWay.GiveItem((Player) evt.getPlayer(), oneitem);
             }
             if(twoitem!=null&&twoitem.getType()!=Material.AIR) {
-            	CommonlyWay.GiveItem((Player) event.getPlayer(), twoitem);
+            	CommonlyWay.GiveItem((Player) evt.getPlayer(), twoitem);
             }
             if(threeitem!=null&&threeitem.getType()!=Material.AIR) {
-            	CommonlyWay.GiveItem((Player) event.getPlayer(), threeitem);
+            	CommonlyWay.GiveItem((Player) evt.getPlayer(), threeitem);
             }
         }
 	}
